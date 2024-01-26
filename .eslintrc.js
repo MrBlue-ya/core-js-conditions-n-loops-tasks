@@ -19,8 +19,12 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
+        printWidth: 1000,
       },
     ],
+    'no-plusplus': 'off',
+    'consistent-return': 'off',
+    'no-else-return': 'off',
   },
   plugins: ['prettier'],
   ignorePatterns: ['extensions/utility.js'],
