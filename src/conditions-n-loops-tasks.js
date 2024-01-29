@@ -275,24 +275,17 @@ function getIndexOf(str, letter) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(num) {
-  // let count = 0;
-  // for (let i = 0; i < str.length; i++) {
-  //   if (letter !== str[i]) {
-  //     count += 1;
-  //   } else {
-  //     return i;
-  //   }
-  //   if (count === str.length) {
-  //     return -1;
-  //   }
-  // }
-  for (let i = 0; i < num.length; i++) {
-    console.log(num[i]);
+function isContainNumber(num, digit) {
+  let newNum = num;
+  while (newNum !== 0) {
+    const currentNum = newNum % 10;
+    if (currentNum === digit) {
+      return true;
+    }
+    newNum = (newNum / 10) | 0;
   }
+  return false;
 }
-
-isContainNumber(1234);
 
 /**
  * Finds the index of an element in an array where the sum of elements to the left equals the sum of elements to the right.
@@ -307,8 +300,22 @@ isContainNumber(1234);
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let leftNums = 0;
+    let rightNums = 0;
+    for (let j = 0; j < i; j++) {
+      leftNums += arr[j];
+    }
+
+    for (let k = arr.length - 1; k > i; k--) {
+      rightNums += arr[k];
+    }
+    if (leftNums === rightNums) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -332,8 +339,50 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const rows = size;
+  const cols = size;
+  const arr = [];
+
+  let iStart = 0;
+  let iFinish = 0;
+  let jStart = 0;
+  let jFinish = 0;
+
+  for (let i = 0; i < rows; i++) {
+    arr[i] = [];
+    for (let j = 0; j < cols; j++) {
+      arr[i][j] = null;
+    }
+  }
+
+  let k = 1;
+  let i = 0;
+  let j = 0;
+
+  while (k <= size ** 2) {
+    arr[i][j] = k;
+
+    if (i === iStart && j < cols - jFinish - 1) {
+      j++;
+    } else if (j === cols - jFinish - 1 && i < rows - iFinish - 1) {
+      i++;
+    } else if (i === rows - iFinish - 1 && j > jStart) {
+      j--;
+    } else {
+      i--;
+    }
+
+    if (i === iStart + 1 && j === jStart) {
+      iStart++;
+      iFinish++;
+      jStart++;
+      jFinish++;
+    }
+
+    k++;
+  }
+  return arr;
 }
 
 /**
@@ -351,8 +400,18 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const newMatrix = matrix;
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const arr = JSON.parse(JSON.stringify(matrix));
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      newMatrix[j][cols - 1 - i] = arr[i][j];
+    }
+  }
+  return newMatrix;
 }
 
 /**
@@ -369,9 +428,18 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      if (arr[i] < arr[j]) {
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+  }
+
+  return arr;
 }
+console.log(sortByAsc([2, 9, 5, 9]));
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.

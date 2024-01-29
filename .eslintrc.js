@@ -25,6 +25,8 @@ module.exports = {
     'no-plusplus': 'off',
     'consistent-return': 'off',
     'no-else-return': 'off',
+    'no-bitwise': 'off',
+    'no-param-reassign': 'off',
   },
   plugins: ['prettier'],
   ignorePatterns: ['extensions/utility.js'],
