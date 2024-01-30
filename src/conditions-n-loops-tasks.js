@@ -155,7 +155,7 @@ function convertToRomanNumerals(num) {
  */
 function convertNumberToString(numberStr) {
   let newNumStr = '';
-  for (let i = 0; i < numberStr.length; i++) {
+  for (let i = 0; i < numberStr.length; i += 1) {
     const num = numberStr[i];
     switch (num) {
       case '0':
@@ -199,7 +199,6 @@ function convertNumberToString(numberStr) {
         break;
 
       default:
-        return;
     }
     if (i !== numberStr.length - 1) {
       newNumStr += ' ';
@@ -207,6 +206,7 @@ function convertNumberToString(numberStr) {
   }
   return newNumStr;
 }
+
 /**
  * Determines whether a string is a palindrome.
  * In this task, the use of methods of the String and Array classes is not allowed.
@@ -221,15 +221,14 @@ function convertNumberToString(numberStr) {
  */
 function isPalindrome(str) {
   let reversWord = '';
-  for (let i = str.length - 1; i >= 0; i--) {
+  for (let i = str.length - 1; i >= 0; i -= 1) {
     reversWord += str[i];
   }
 
   if (reversWord === str) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 /**
@@ -247,17 +246,12 @@ function isPalindrome(str) {
  *  'qwerty', 'p'     => -1
  */
 function getIndexOf(str, letter) {
-  let count = 0;
-  for (let i = 0; i < str.length; i++) {
-    if (letter !== str[i]) {
-      count += 1;
-    } else {
+  for (let i = 0; i < str.length; i += 1) {
+    if (letter === str[i]) {
       return i;
     }
-    if (count === str.length) {
-      return -1;
-    }
   }
+  return -1;
 }
 
 /**
@@ -282,7 +276,7 @@ function isContainNumber(num, digit) {
     if (currentNum === digit) {
       return true;
     }
-    newNum = (newNum / 10) | 0;
+    newNum = Math.trunc((newNum /= 10));
   }
   return false;
 }
@@ -301,14 +295,14 @@ function isContainNumber(num, digit) {
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
 function getBalanceIndex(arr) {
-  for (let i = 1; i < arr.length; i++) {
+  for (let i = 1; i < arr.length; i += 1) {
     let leftNums = 0;
     let rightNums = 0;
-    for (let j = 0; j < i; j++) {
+    for (let j = 0; j < i; j += 1) {
       leftNums += arr[j];
     }
 
-    for (let k = arr.length - 1; k > i; k--) {
+    for (let k = arr.length - 1; k > i; k -= 1) {
       rightNums += arr[k];
     }
     if (leftNums === rightNums) {
@@ -349,9 +343,9 @@ function getSpiralMatrix(size) {
   let jStart = 0;
   let jFinish = 0;
 
-  for (let i = 0; i < rows; i++) {
+  for (let i = 0; i < rows; i += 1) {
     arr[i] = [];
-    for (let j = 0; j < cols; j++) {
+    for (let j = 0; j < cols; j += 1) {
       arr[i][j] = null;
     }
   }
@@ -364,23 +358,23 @@ function getSpiralMatrix(size) {
     arr[i][j] = k;
 
     if (i === iStart && j < cols - jFinish - 1) {
-      j++;
+      j += 1;
     } else if (j === cols - jFinish - 1 && i < rows - iFinish - 1) {
-      i++;
+      i += 1;
     } else if (i === rows - iFinish - 1 && j > jStart) {
-      j--;
+      j -= 1;
     } else {
-      i--;
+      i -= 1;
     }
 
     if (i === iStart + 1 && j === jStart) {
-      iStart++;
-      iFinish++;
-      jStart++;
-      jFinish++;
+      iStart += 1;
+      iFinish += 1;
+      jStart += 1;
+      jFinish += 1;
     }
 
-    k++;
+    k += 1;
   }
   return arr;
 }
@@ -406,8 +400,8 @@ function rotateMatrix(matrix) {
   const cols = matrix[0].length;
   const arr = JSON.parse(JSON.stringify(matrix));
 
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
+  for (let i = 0; i < rows; i += 1) {
+    for (let j = 0; j < cols; j += 1) {
       newMatrix[j][cols - 1 - i] = arr[i][j];
     }
   }
@@ -435,12 +429,12 @@ function rotateMatrix(matrix) {
 //   let i = left;
 //   let j = right - 1;
 //   while (i <= j) {
-//     while (arr[i] < pivot) i++;
-//     while (arr[j] > pivot) j--;
+//     while (arr[i] < pivot) i += 1;
+//     while (arr[j] > pivot) j-= 1;
 //     if (i <= j) {
 //       [arr[i], arr[j]] = [arr[j], arr[i]];
-//       i++;
-//       j--;
+//       i += 1;
+//       j-= 1;
 //     }
 //   }
 //   quickSort(arr, left, j);
